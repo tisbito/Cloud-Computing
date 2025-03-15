@@ -13,17 +13,17 @@ const processRequest = (req, res) => {
                 case '/harryPotter':
                     res.setHeader('Content-Type', 'application/json; charset=utf-8');
                     res.end(JSON.stringify(PoterJSON));
-                    break;
+                    
 
                 case '/pokemon':
                     res.setHeader('Content-Type', 'application/json; charset=utf-8');
                     res.end(JSON.stringify(PokemonJSON));                
-                    break;
+                    
    
                 case '/datos':
                     res.setHeader('Content-Type', 'application/json; charset=utf-8');                    
                     res.end(JSON.stringify(datosJSON));
-                    break;
+                    
 
                 default:
                     res.statusCode = 404;
