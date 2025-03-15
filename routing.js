@@ -4,38 +4,37 @@ const PoterJSON = require('./JSON/harryPotter.json')
 const PokemonJSON = require('./JSON/pokemonDitto.json');
 const datosJSON = { "name": "John", "age": 31, "city": "New York"};
 
-
 const processRequest = (req, res) => {
     const {method, url} = req;
     
     switch(method){
-       case 'GET':
+        case 'GET':
             switch(url){
-               case '/harryPotter':
-
+                case '/harryPotter':
                     res.setHeader('Content-Type', 'application/json; charset=utf-8');
-                    return res.end(JSON.stringify(PoterJSON));
-            
+                    res.end(JSON.stringify(PoterJSON));
+                    break;
+
                 case '/pokemon':
-
                     res.setHeader('Content-Type', 'application/json; charset=utf-8');
-                    return res.end(JSON.stringify(PokemonJSON));                
+                    res.end(JSON.stringify(PokemonJSON));                
+                    break;
    
                 case '/datos':
-                    
                     res.setHeader('Content-Type', 'application/json; charset=utf-8');                    
-                    return res.end(JSON.stringify(datosJSON));
+                    res.end(JSON.stringify(datosJSON));
+                    break;
 
                 default:
-
                     res.statusCode = 404;
                     res.setHeader('Content-Type', 'text/html; charset=utf-8');
                     res.end('<h1>Not Found</h1>');
             }
-        
+            break; // 🚀 SOLUCIÓN: Evita que siga ejecutando código del 'POST'
+
         case 'POST':
             switch(url){
-                case '/datos':{
+                case '/datos': {
                     let body = '';
                     
                     req.on('data', chunk => {
@@ -48,20 +47,19 @@ const processRequest = (req, res) => {
                         data.timestamp = Date.now();                     
                         res.end(JSON.stringify(data));
                     });
-                    
-                    break
+                    break;
                 }
                 default:
-                    res.statusCode = 404
-                    res.setHeader('Content-Type', 'text/plain; charset=utf-8')
-                    return res.end('404 Not Found')        
-                
+                    res.statusCode = 404;
+                    res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+                    res.end('404 Not Found');        
             }
+            break; // 🚀 SOLUCIÓN: Evita que continúe ejecutando más código
     }   
 }
 
-const server = http.createServer(processRequest)
+const server = http.createServer(processRequest);
 
 server.listen(3000, () => {
     console.log('Server running at http://localhost:3000');
-})
+});
